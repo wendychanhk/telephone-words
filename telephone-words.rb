@@ -11,14 +11,26 @@ class Words
 	 8 => ["T", "U", "V"], 
 	 9 => ["W", "X", "Y", "Z"]}
 
-  def telephoneWords arr_input
-	arr_output = []
-      MAP[arr_input[0]].each do |char_1| 
-	    MAP[arr_input[1]].each do |char_2| 
-	 	  str = char_1 + char_2 
-	 	  arr_output << str 
-	    end 
-      end 
-    arr_output
-  end 
-end
+  def telephoneWords(arr_input)
+    recursive(arr_input, 0, [])
+  end
+
+  def recursive(arr_input, i, arr_output)   
+    if i == arr_input.count #base case 
+      puts arr_output.join("")
+      return 
+  end
+    arr_char = []
+    arr_input.each do |int|
+	  arr_char << MAP[int]
+    end 
+    0.upto(arr_char[i].count - 1) do |j|
+      arr_output << arr_char[i][j]
+      recursive(arr_input, i + 1, arr_output) # getting closer to base case 
+      arr_output.pop 
+    end
+  end
+end 
+
+words = Words.new 
+words.telephoneWords([9,2,4])
